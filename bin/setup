@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+# Exit if subcommand fails
+set -e
+
+

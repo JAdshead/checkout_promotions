@@ -7,4 +7,5 @@ describe Item do
   describe 'initialize' do
     it { expect(item).to be_instance_of(Item) }
   end
+
 end

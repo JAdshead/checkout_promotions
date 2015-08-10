@@ -1,14 +1,19 @@
 class PromotionalRule
-  attr_reader :qualification, :discounted, :amount
 
-  def initialize qualification, discounted, amount
-    @qualification = qualification
-    @discounted = discounted
-    @amount = amount
+  def initialize options = {}
+    @minimum_basket_price = options[:min_basket_price]
   end
 
-  def qualify?
+  def get_discount basket
+    qualify?(basket) ? 100 : 0
+  end
 
+  def qualify? basket
+    if basket.total_price > @minimum_basket_price.to_i
+      true
+    else
+      false
+    end
   end
 
 end

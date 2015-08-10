@@ -1,7 +1,7 @@
 require 'csv'
 class Item
 
-  attr_reader :price, :name, :product_code
+  attr_reader :name, :product_code, :price
 
   def initialize product_code, name, price
     @product_code = product_code
@@ -9,23 +9,24 @@ class Item
     @price = price
   end
 
-  def self.all
-    @items ||= process_csv
-  end
-
-  def self.process_csv
-    csv = CSV.read('./db/items.csv', headers: true, header_converters: :symbol)
-    items = []
-    csv.each do |row|
-      puts row[:product_code]
-      items <<  Item.new(row[:product_code],row[:name], row[:price])
+  class << self
+    def all
+      @items ||= process_csv
     end
-    items
-  end
 
-  def self.find product_code
-    index = Item.all.find_index { |item| item.product_code == product_code }
-    Item.all[index]
+    def process_csv
+      csv = CSV.read('./db/items.csv', headers: true, header_converters: :symbol)
+      items = []
+      csv.each do |row|
+        items <<  Item.new(row[:product_code],row[:name], row[:price].sub('£','').sub('.','').to_i)
+      end
+      items
+    end
+
+    def find product_code
+      index = Item.all.find_index { |item| item.product_code == product_code }
+      Item.all[index]
+    end
   end
 
 end

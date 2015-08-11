@@ -28,26 +28,26 @@ describe Checkout do
     it { expect { checkout.scan(item) }.to change { checkout.items.count }.from(0).to(1) }
   end
 
-#   describe "#total_price" do
-#     it 'returns basket total' do
-#       basket.add_item(item)
-#       basket.add_item(item2)
-#       expect( basket.total_price ).to be(300)
-#     end
-#   end
+  describe "#total_price" do
+    it 'returns checkout total' do
+      checkout.scan(item)
+      checkout.scan(item2)
+      expect( checkout.total_price ).to be(300)
+    end
+  end
 
-#   describe "#list_items" do
-#     it { expect( basket.list_items ).to eq({}) }
+  describe "#list_items" do
+    it { expect( checkout.list_items ).to eq({}) }
 
-#     context "basket with items" do
-#       it "returns list" do
-#         basket.add_item(item)
-#         basket.add_item(item)
-#         basket.add_item(item2)
-#         expect( basket.list_items ).to eq({item.product_code => 2, item2.product_code => 1 } )
-#       end
-#     end
-#   end
+    context "checkout with items" do
+      it "returns list" do
+        checkout.scan(item)
+        checkout.scan(item)
+        checkout.scan(item2)
+        expect( checkout.list_items ).to eq({item.product_code => 2, item2.product_code => 1 } )
+      end
+    end
+   end
 
   describe "#total" do
     context "with no promotions" do

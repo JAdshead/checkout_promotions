@@ -34,4 +34,29 @@ describe PromotionalRule do
     end
   end
 
+  describe "#process" do
+
+    it "raises error" do
+      promo.store(full_basket)
+      expect{ promo.process "10" }.to raise_error(TypeError)
+    end
+
+    context "cash discount" do
+
+      it "returns discount in pence" do
+        promo.store(full_basket)
+        expect( promo.process "£10.00" ).to eq(1000)
+      end
+
+    end
+
+    context "percentage discount" do
+      it "returns discount in pence" do
+        promo.store(full_basket)
+        expect( promo.process "10%" ).to eq(44)
+      end
+
+    end
+  end
+
 end

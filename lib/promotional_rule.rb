@@ -1,12 +1,30 @@
+require 'utils'
+
 class PromotionalRule
 
   def initialize discount
     @discount = discount
   end
 
+  def process discount
+    return discount if discount.is_a? Integer
+
+    if discount.include?("£")
+      Utils.price_to_pence(discount)
+
+    elsif discount.include?("%")
+      ( @basket.total_price / 100.0 ) * discount.sub('%','').to_i
+
+    else
+      raise(TypeError, "Needs to either be in % or £ or total pence(Integer). Example: '10%' or '£10.00'")
+    end
+  end
+
+  #write function to figure if % or £ discount
+
   def get_discount basket
     store basket
-    qualify? ? @discount : 0
+    qualify? ? process(@discount) : 0
   end
 
   def store basket

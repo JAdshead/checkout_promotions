@@ -8,7 +8,7 @@ module Utils
 
 
   def show_price int
-    "£" + ( '%.2f' % (int/100.0))
+    format('£%.2f', (int/100.0))
   end
   module_function :show_price
 

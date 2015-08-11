@@ -1,5 +1,4 @@
 require 'promotional_rule'
-require 'utils'
 
 class BasketPromotion < PromotionalRule
 

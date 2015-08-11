@@ -13,14 +13,13 @@ class PromotionalRule
       Utils.price_to_pence(discount)
 
     elsif discount.include?("%")
-      ( @basket.total_price / 100.0 ) * discount.sub('%','').to_i
+      ( @basket.total_price / 100.0 ) * discount.sub('%','').to_f
 
     else
       raise(TypeError, "Needs to either be in % or £ or total pence(Integer). Example: '10%' or '£10.00'")
     end
   end
 
-  #write function to figure if % or £ discount
 
   def get_discount basket
     store basket

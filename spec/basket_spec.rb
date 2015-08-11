@@ -38,7 +38,7 @@ describe Basket do
         basket.add_item(item)
         basket.add_item(item)
         basket.add_item(item2)
-        expect( basket.list_items ).to eq({item.product_code.to_sym => 2, item2.product_code.to_sym => 1 } )
+        expect( basket.list_items ).to eq({item.product_code => 2, item2.product_code => 1 } )
       end
     end
   end

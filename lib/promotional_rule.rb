@@ -20,7 +20,6 @@ class PromotionalRule
     end
   end
 
-
   def get_discount basket
     store basket
     qualify? ? process(@discount) : 0

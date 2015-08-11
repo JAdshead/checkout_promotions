@@ -3,48 +3,43 @@ require 'promotional_rule'
 
 describe PromotionalRule do
   subject(:promo) { PromotionalRule.new(discount) }
-  let(:discount) { 10 }
-  let(:empty_basket) { double("Basket", total_price: 0, items: [] ) }
-  let(:full_basket) { double("Basket", total_price: 440, items: [item,item, item2] ) }
-  let(:item) { instance_double("Item", product_code: '001', price: 140) }
-  let(:item2) { instance_double("Item", product_code: '002', price: 160) }
+
+  let(:discount) { "10%" }
+  let(:item_list) { { "001" => 2, "002" => 1 } }
+  let(:current_total) { 440 }
 
   before(:each) do
-    allow(empty_basket).to receive(:empty?).and_return(true)
-    allow(full_basket).to receive(:empty?).and_return(false)
+    promo.item_list = item_list
+    promo.current_total = current_total
   end
 
-  describe "#get_discount" do
-    it { expect(promo.get_discount full_basket).to be(10) }
+  describe "#check_discount" do
+    it { expect(promo.check_discount item_list, current_total).to eq(44) }
   end
 
   describe "#qualify?" do
-    context "empty basket" do
-      it "returns false" do
-        promo.store(empty_basket)
-        expect(promo.qualify?).to be(false)
-      end
-
+    it "returns true" do
+      expect(promo.qualify?).to be(true)
     end
-    context "full basket" do
-      it "returns true" do
-        promo.store(full_basket)
-        expect(promo.qualify?).to be(true)
+
+    context "empty basket" do
+      let(:item_list) { Hash.new(0) }
+      it "returns false" do
+        expect(promo.qualify?).to be(false)
       end
     end
   end
 
   describe "#process" do
 
-    it "raises error" do
-      promo.store(full_basket)
-      expect{ promo.process "10" }.to raise_error(TypeError)
+    context "invalid argument" do
+      it "raises error" do
+        expect{ promo.process "10" }.to raise_error(TypeError)
+      end
     end
 
     context "cash discount" do
-
       it "returns discount in pence" do
-        promo.store(full_basket)
         expect( promo.process "£10.00" ).to eq(1000)
       end
 
@@ -52,10 +47,8 @@ describe PromotionalRule do
 
     context "percentage discount" do
       it "returns discount in pence" do
-        promo.store(full_basket)
         expect( promo.process "10%" ).to eq(44)
       end
-
     end
   end
 

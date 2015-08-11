@@ -4,10 +4,6 @@ require 'checkout'
 describe Checkout do
   subject(:checkout) { Checkout.new }
 
-  before(:each) { allow(Basket).to receive(:new).and_return(basket)  }
-
-  let(:basket) { double("Basket", add_item: true, total_price: '300' )  }
-
   let(:promotional_rules) { [promotion_1, promotion_2] }
   let(:promotion_1) { instance_double("Promotion" ) }
   let(:promotion_2) { instance_double("Promotion") }
@@ -28,6 +24,31 @@ describe Checkout do
     end
   end
 
+  describe "#scan" do
+    it { expect { checkout.scan(item) }.to change { checkout.items.count }.from(0).to(1) }
+  end
+
+#   describe "#total_price" do
+#     it 'returns basket total' do
+#       basket.add_item(item)
+#       basket.add_item(item2)
+#       expect( basket.total_price ).to be(300)
+#     end
+#   end
+
+#   describe "#list_items" do
+#     it { expect( basket.list_items ).to eq({}) }
+
+#     context "basket with items" do
+#       it "returns list" do
+#         basket.add_item(item)
+#         basket.add_item(item)
+#         basket.add_item(item2)
+#         expect( basket.list_items ).to eq({item.product_code => 2, item2.product_code => 1 } )
+#       end
+#     end
+#   end
+
   describe "#total" do
     context "with no promotions" do
       it 'returns total with no discount' do
@@ -41,8 +62,8 @@ describe Checkout do
       subject(:checkout) { Checkout.new(promotional_rules) }
 
       it 'returns total with discount applied' do
-        allow(promotion_1).to receive(:get_discount).and_return("50")
-        allow(promotion_2).to receive(:get_discount).and_return("50")
+        allow(promotion_1).to receive(:check_discount).and_return(45)
+        allow(promotion_2).to receive(:check_discount).and_return(55)
 
         checkout.scan(item)
         checkout.scan(item2)

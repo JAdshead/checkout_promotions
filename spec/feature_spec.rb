@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'item'
 require 'checkout'
-require 'basket'
+# require 'basket'
 require 'basket_promotion'
 require 'item_promotion'
 
@@ -11,7 +11,7 @@ describe "checkout system" do
   item2 = Item.new("002", "Personalised cufflinks", "£45.00")
   item3 = Item.new("003", "Kids T-shirt", "£19.95")
 
-  basket_promo  = BasketPromotion.new('£60.00', "10%")
+  basket_promo = BasketPromotion.new('£60.00', "10%")
   item_promo = ItemPromotion.new('001',2, '£0.75')
 
   describe "single basket promo" do
@@ -86,14 +86,11 @@ describe "checkout system" do
     context "meets both promos" do
       subject(:checkout) { Checkout.new([ item_promo, basket_promo ] ) }
       it "applies discount" do
-        checkout.scan(item) # 9.25 , 8.50
-        checkout.scan(item2) # 45
-        checkout.scan(item) # 9.25 , 8.50
-        checkout.scan(item3) #19.95
+        checkout.scan(item)
+        checkout.scan(item2)
+        checkout.scan(item)
+        checkout.scan(item3)
 
-        # pre discount cost = 83.45
-        # item discount 1.50 = 81.95
-        # basket discount 8.20 || 819.5
         expect( checkout.total ).to eq("£73.76")
       end
 

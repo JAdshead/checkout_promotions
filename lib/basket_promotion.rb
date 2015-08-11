@@ -8,7 +8,7 @@ class BasketPromotion < PromotionalRule
   end
 
   def qualify?
-    if @basket.total_price > @min_basket_price.to_i
+    if @current_total > @min_basket_price.to_i
       true
     else
       false

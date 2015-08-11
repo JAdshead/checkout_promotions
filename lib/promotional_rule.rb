@@ -5,11 +5,16 @@ class PromotionalRule
   end
 
   def get_discount basket
-    qualify?(basket) ? @discount : 0
+    store basket
+    qualify? ? @discount : 0
   end
 
-  def qualify? basket
-    basket.empty? ? false : true
+  def store basket
+    @basket = basket
+  end
+
+  def qualify?
+    @basket.empty? ? false : true
   end
 
 end

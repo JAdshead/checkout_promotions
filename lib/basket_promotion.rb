@@ -7,8 +7,8 @@ class BasketPromotion < PromotionalRule
     @discount  = discount
   end
 
-  def qualify? basket
-    if basket.total_price > @min_basket_price.to_i
+  def qualify?
+    if @basket.total_price > @min_basket_price.to_i
       true
     else
       false

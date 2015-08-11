@@ -21,4 +21,8 @@ class Basket
     self.items.reduce(0) { |sum, item| sum += item.price }
   end
 
+  def list_items
+    self.items.reduce(Hash.new(0)) { |list, item| list[item.product_code.to_sym] += 1; list }
+  end
+
 end

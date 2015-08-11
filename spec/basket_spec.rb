@@ -15,8 +15,19 @@ describe Basket do
     it 'returns basket total' do
       basket.add_item(item)
       basket.add_item(item2)
-
       expect( basket.total_price ).to eq(300)
+    end
+  end
+
+  describe "#empty?" do
+    it { expect( basket.empty? ).to be(true) }
+    context "with items" do
+      it "returns true" do
+        basket.add_item(item)
+        basket.add_item(item2)
+
+        expect( basket.empty? ).to  be(false)
+      end
     end
   end
 end

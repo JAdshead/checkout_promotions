@@ -22,7 +22,6 @@ class Checkout
     end
   end
 
-
   def total
     @basket.total_price.to_i - discount.to_i
   end

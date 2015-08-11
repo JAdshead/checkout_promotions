@@ -1,12 +1,13 @@
 require 'csv'
-class Item
+require 'utils'
 
-  attr_reader :name, :product_code, :price
+class Item
+  attr_reader :product_code, :name , :price
 
   def initialize product_code, name, price
     @product_code = product_code
     @name = name
-    @price = price
+    @price = Utils.price_to_pence(price)
   end
 
   class << self

@@ -1,10 +1,11 @@
 require 'basket'
+require 'utils'
 
 class Checkout
   attr_reader :basket, :promotions
 
   def initialize promos = []
-    @promotions = promos
+    @promotions = promos.is_a?(Array) ? promos : promos.to_a
     @basket = Basket.new
   end
 
@@ -13,7 +14,7 @@ class Checkout
   end
 
   def discount
-    if @promotions.count > 0
+    if !@promotions.empty?
       @promotions.reduce(0) do |total_discount, promotion|
         total_discount += promotion.get_discount(basket).to_i
       end
@@ -23,7 +24,8 @@ class Checkout
   end
 
   def total
-    @basket.total_price.to_i - discount.to_i
+    # require 'pry'; binding.pry
+    Utils.show_price(@basket.total_price.to_i - discount.to_i)
   end
 
 end

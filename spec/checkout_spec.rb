@@ -33,7 +33,7 @@ describe Checkout do
       it 'returns total with no discount' do
         checkout.scan(item)
         checkout.scan(item2)
-        expect( checkout.total ).to eq(300)
+        expect( checkout.total ).to eq("£3.00")
       end
     end
 
@@ -46,30 +46,10 @@ describe Checkout do
 
         checkout.scan(item)
         checkout.scan(item2)
-        expect( checkout.total ).to eq(200)
+        expect( checkout.total ).to eq("£2.00")
       end
     end
   end
-
-  # describe "#discount" do
-  #   context "with no promotions" do
-  #     it { expect( checkout.discount ).to eq(0) }
-  #   end
-
-  #   context "with promotions" do
-  #     context "basket discount" do
-  #       it "applies discount to basket"
-  #     end
-
-  #     context "item discount" do
-  #       it "applies discount to basket"
-  #     end
-
-  #     context "multiple discounts" do
-  #       it "applies discount to basket"
-  #     end
-  #   end
-  # end
 
 end
 

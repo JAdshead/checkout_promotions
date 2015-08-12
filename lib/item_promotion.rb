@@ -1,5 +1,6 @@
 require 'promotional_rule'
 
+# updated for Item Promotion rules
 class ItemPromotion < PromotionalRule
 
   def initialize discounted_item, min_item_quantity, discount

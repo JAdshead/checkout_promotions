@@ -1,10 +1,10 @@
 require 'spec_helper'
 require 'item'
 require 'checkout'
-# require 'basket'
 require 'basket_promotion'
 require 'item_promotion'
 
+# feature spec to test complete system
 describe "checkout system" do
   subject(:checkout) { Checkout.new }
   item  = Item.new("001", "Lavender heart", "£9.25")
@@ -21,7 +21,8 @@ describe "checkout system" do
       it "does not discount" do
         checkout.scan(item)
         checkout.scan(item)
-        expect(checkout.total).to eq("£18.50")
+
+        expect( checkout.total ).to eq("£18.50")
       end
     end
 
@@ -30,6 +31,7 @@ describe "checkout system" do
         checkout.scan(item)
         checkout.scan(item2)
         checkout.scan(item3)
+
         expect( checkout.total ).to eq("£66.78")
       end
     end
@@ -43,6 +45,7 @@ describe "checkout system" do
         checkout.scan(item)
         checkout.scan(item2)
         checkout.scan(item3)
+
         expect( checkout.total ).to eq("£74.20")
       end
     end

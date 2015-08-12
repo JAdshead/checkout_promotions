@@ -10,6 +10,9 @@ class Item
     @price = Utils.price_to_pence(price)
   end
 
+
+  # I was unsure how i wanted manage items in the checkout
+  # this is unsed but was helpfull when testing ideas in pry
   class << self
     def all
       @items ||= process_csv

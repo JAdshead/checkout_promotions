@@ -1,5 +1,6 @@
 module Utils
 
+  # utility method used to ensure that the price is handled in pence
   def price_to_pence price
     return price if price.is_a?(Integer)
 
@@ -16,6 +17,7 @@ module Utils
   end
   module_function :price_to_pence
 
+  # method to display price in formated string
   def show_price int
     format('£%.2f', (int/100.0))
   end

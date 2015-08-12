@@ -4,8 +4,8 @@ require 'promotional_rule'
 describe PromotionalRule do
   subject(:promo) { PromotionalRule.new(discount) }
 
-  let(:discount) { "10%" }
-  let(:item_list) { { "001" => 2, "002" => 1 } }
+  let(:discount)      { "10%" }
+  let(:item_list)     { { "001" => 2, "002" => 1 } }
   let(:current_total) { 440 }
 
   before(:each) do
@@ -14,18 +14,20 @@ describe PromotionalRule do
   end
 
   describe "#check_discount" do
-    it { expect(promo.check_discount item_list, current_total).to eq(44) }
+    it { expect( promo.check_discount item_list, current_total ).to eq(44) }
   end
 
   describe "#qualify?" do
+
     it "returns true" do
-      expect(promo.qualify?).to be(true)
+      expect( promo.qualify? ).to be(true)
     end
 
     context "empty basket" do
       let(:item_list) { Hash.new(0) }
+
       it "returns false" do
-        expect(promo.qualify?).to be(false)
+        expect( promo.qualify? ).to be(false)
       end
     end
   end
@@ -42,7 +44,6 @@ describe PromotionalRule do
       it "returns discount in pence" do
         expect( promo.process "£10.00" ).to eq(1000)
       end
-
     end
 
     context "percentage discount" do
@@ -51,5 +52,4 @@ describe PromotionalRule do
       end
     end
   end
-
 end
